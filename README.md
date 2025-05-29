@@ -11,12 +11,13 @@
 
 ## 运行环境
 - Python 3.8+
-- Flask 
+- Flask
    - 使用 pip 安装即可
 - pandas
 - NumPy
 - matplotlib
-- sklearn
+- scikit-learn
+- statsmodels
 - tqdm
 
 ## 部署与运行

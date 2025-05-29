@@ -32,7 +32,27 @@ def run_model():
     comb_names, r2_scores = mf.estimate_R2_hist(df)
 
     # 预测 vs 实际
-    dates, y_pred, y_true, _ = mf.get_predict_curve(df, factors)
+    dates, y_pred, y_true, model_results = mf.get_predict_curve(df, factors)
+
+    # 模型拟合参数
+    stats_data = {
+        'r_squared': model_results.rsquared,
+        'adj_r_squared': model_results.rsquared_adj,
+        'f_statistic': model_results.fvalue,
+        'p_value': model_results.f_pvalue,
+        'num_observations': model_results.nobs
+    }
+    # 获取系数和对应的 p 值
+    coef_data = []
+    for i, factor in enumerate(factors):
+        coef_data.append({
+            'factor': factor,
+            'coefficient': model_results.params[i+1],  # +1 因为第一个通常是截距
+            'std_error': model_results.bse[i+1],
+            'p_value': model_results.pvalues[i+1],
+            't_statistic': model_results.tvalues[i+1]
+        })
+    stats_data['coefficients'] = coef_data
 
     # 散点图数据
     scatter_data = {}
@@ -56,7 +76,8 @@ def run_model():
             'y_pred': y_pred.tolist(),
             'y_true': y_true.tolist()
         },
-        'scatter': scatter_data
+        'scatter': scatter_data,
+        'stats_data': stats_data
     })
 
 if __name__ == '__main__':
