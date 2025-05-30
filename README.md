@@ -21,7 +21,7 @@
 - tqdm
 
 ## 部署与运行
-下载[历史数据文件](https://pan.sjtu.edu.cn/web/share/dc459a4381737e83f6537b5a2282de9c)（提取码：pajf）`his_sh1_201907-202406.tar.gz` 后放到 backend 目录下，执行
+下载[历史数据文件](https://pan.sjtu.edu.cn/web/share/617e26ee98b15d7b3d56109819dcf5b0)（提取码：maev）`his_sh1_201907-202406.tar.gz` 后放到 backend 目录下，执行
 ```bash
 cd backend
 tar -zxvf .\his_sh1_201907-202406.tar.gz
