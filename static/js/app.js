@@ -128,6 +128,49 @@ document.addEventListener("DOMContentLoaded", function() {
                 return [];
             });
     }
+
+    // 预设股票组合
+    function initPortfolioPresetSelector() {
+        const presetSelector = document.getElementById("portfolio-preset-selector");
+        if (!presetSelector) return;
+
+        const presets = {
+            "组合A": {
+                "000001": 0.4,
+                "600519": 0.3,
+                "600036": 0.3
+            },
+            "组合B": {
+                "000031": 0.5,
+                "000078": 0.3,
+                "000111": 0.2
+            },
+            "组合C": {
+                "000002": 0.33,
+                "600000": 0.33,
+                "600104": 0.34
+            }
+        };
+
+        for (const name in presets) {
+            const option = document.createElement("option");
+            option.value = name;
+            option.textContent = name;
+            presetSelector.appendChild(option);
+        }
+
+        presetSelector.addEventListener("change", function () {
+            const selected = presetSelector.value;
+            if (presets[selected]) {
+                portfolioTableBody.innerHTML = "";
+                const stocks = presets[selected];
+                for (const code in stocks) {
+                    addStockRow(code, stocks[code]);
+                }
+                updatePortfolioJSON();
+            }
+        });
+    }
     
     // 初始化
     loadStockListData().then(() => {
@@ -138,6 +181,9 @@ document.addEventListener("DOMContentLoaded", function() {
             addStockRow("600096", 0.2);
             updatePortfolioJSON();
         }
+
+        // 预设组合
+        initPortfolioPresetSelector();
     });
 });
 
